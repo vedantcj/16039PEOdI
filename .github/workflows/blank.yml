@@ -17,9 +17,11 @@ jobs:
     - name: Install pandoc
       run: sudo apt-get install pandoc -y
 
+    - name: Create rendered_html directory
+      run: mkdir -p rendered_html
+
     - name: Render Markdown files
       run: |
-        mkdir rendered_html
         for file in *.md; do
           pandoc "$file" -o "rendered_html/${file%.md}.html"
         done
@@ -31,15 +33,9 @@ jobs:
         author_email: actions@github.com
         message: 'Render Markdown to HTML'
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
 
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
         branch: ${{ github.ref }}
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./rendered_html
