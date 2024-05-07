@@ -32,13 +32,6 @@ jobs:
         author_name: GitHub Actions
         author_email: actions@github.com
         message: 'Render Markdown to HTML'
+        add: 'rendered_html/*.html'
       env:
         GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-
-    - name: Push changes
-      run: |
-        git config --global user.email "actions@github.com"
-        git config --global user.name "GitHub Actions"
-        git add .
-        git commit -m "Auto-commit"
-        git push https://${{ secrets.GH_TOKEN }}@github.com/vedantcj/16039PEOdI.git HEAD:main
